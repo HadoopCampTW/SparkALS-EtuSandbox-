@@ -9,12 +9,14 @@ import org.apache.spark.SparkContext._
 import org.apache.spark.rdd.{RDD => SparkRDD}
 
 import org.apache.spark.util.Utils
+import org.apache.hadoop.fs.FileUtil
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 
 import org.apache.commons.io._
 
+import sys.process._
 
 import java.io.File;
 
@@ -24,7 +26,8 @@ object SparkAls {
    //private val RUN_JAR="/home/cray/ScalaParseDate/target/scala-2.10/scalaparsedate_2.10-0.1-SNAPSHOT.jar"
    private val RUN_JAR="/home/cray/SparkAls/target/scala-2.10/sparkals_2.10-0.1-SNAPSHOT.jar"
    //private val Out_path = "/Users/cray/Documents/workspace-scala/SparkAls/data/output.data"
-   private val Out_path = "hdfs://hadoop-013:9000/user/cray/SparkAls/output"
+   private val Out_path = "/user/cray/SparkAls/output"
+   private val Out_Hadoop_Path = "hdfs://hadoop-013:9000/user/cray/SparkAls/output"
    // private val In_path  = "/Users/cray/Documents/workspace-scala/SparkAls/data/test.data"
    //private val In_path  = "hdfs://hadoop-013:9000/user/cray/SparkAls/test.data"
    private val In_path  = "hdfs://hadoop-013:9000/user/cray/SparkAls/ratings.dat"
@@ -65,6 +68,8 @@ object SparkAls {
 
   
   def ExecAls(sc:SparkContext) = {
+
+
     // Load and parse the data
     val data = sc.textFile(In_path)
     //test.data
@@ -74,7 +79,7 @@ object SparkAls {
     val ratings = data.map(_.split("::") match { 
       case Array(user, item, rate, _) =>
         Rating(user.toInt, item.toInt, rate.toDouble)
-      case some => println(some); throw new Exception("match error...")
+      case some => println(some); throw new Exception("-->Match error...")
       })
 
     // Build the recommendation model using ALS
@@ -97,19 +102,25 @@ object SparkAls {
       ((user, product), rate)
     }.join(predictions).sortByKey()  //ascending or descending 
 
-    val path = new File(Out_path)
-    FileUtils.deleteDirectory(path)
+
+
+    println("\n\nTry to delete path: ["+Out_path+"]\n\n\n");
+    val delete_out_path = "hadoop fs -rm -r " + Out_path
+    delete_out_path.!
+    //FileUtil.fullyDelete(new File(Out_path));
     
     val formatedRatesAndPreds = ratesAndPreds.map {
       case ((user, product), (rate, pred)) => user + "\t" + product + "\t" + rate + "\t" + pred
     }
-    formatedRatesAndPreds.saveAsTextFile(Out_path)
+    formatedRatesAndPreds.saveAsTextFile(Out_Hadoop_Path)
     
     val MSE = ratesAndPreds.map { case ((user, product), (r1, r2)) => 
       val err = (r1 - r2)
       err * err
     }.mean()
-    println("Mean Squared Error = " + MSE)
+    println("\n\n--->Mean Squared Error = " + MSE + "\n\n\n")
+
+
   }
   
   
