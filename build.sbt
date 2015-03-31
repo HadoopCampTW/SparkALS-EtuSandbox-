@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
 resolvers += "Akka Repository" at "http://repo.akka.io/releases/"
 
 
-libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.0.0-cdh4.2.0"
+libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.5.0-mr1-cdh5.3.2"
 
 libraryDependencies += "org.apache.spark" %% "spark-mllib" % "1.0.2"
 

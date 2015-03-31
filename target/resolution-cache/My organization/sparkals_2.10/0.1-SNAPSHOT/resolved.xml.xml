@@ -4,7 +4,7 @@
 		module="sparkals_2.10"
 		revision="0.1-SNAPSHOT"
 		status="integration"
-		publication="20141027154349"
+		publication="20150331080141"
 	>
 		<description>
 		SparkAls
@@ -37,7 +37,7 @@
 		<dependency org="org.apache.spark" name="spark-core_2.10" rev="1.0.2" conf="compile->default(compile)"/>
 		<dependency org="org.scalatest" name="scalatest_2.10" rev="2.1.RC1" conf="test->default(compile)"/>
 		<dependency org="org.scalacheck" name="scalacheck_2.10" rev="1.11.3" conf="test->default(compile)"/>
-		<dependency org="org.apache.hadoop" name="hadoop-client" rev="2.0.0-cdh4.2.0" conf="compile->default(compile)"/>
+		<dependency org="org.apache.hadoop" name="hadoop-client" rev="2.5.0-mr1-cdh5.3.2" conf="compile->default(compile)"/>
 		<dependency org="org.apache.spark" name="spark-mllib_2.10" rev="1.0.2" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>

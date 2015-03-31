@@ -18,7 +18,7 @@ import org.apache.commons.io._
 
 import sys.process._
 
-import java.io.File;
+import java.io.File
 
 
 object SparkAls {
@@ -27,10 +27,10 @@ object SparkAls {
    private val RUN_JAR="/home/cray/SparkAls/target/scala-2.10/sparkals_2.10-0.1-SNAPSHOT.jar"
    //private val Out_path = "/Users/cray/Documents/workspace-scala/SparkAls/data/output.data"
    private val Out_path = "/user/cray/SparkAls/output"
-   private val Out_Hadoop_Path = "hdfs://hadoop-013:9000/user/cray/SparkAls/output"
+   private val Out_Hadoop_Path = "hdfs://ip-10-166-138-217:7077/users/cray/SparkAls/output"
    // private val In_path  = "/Users/cray/Documents/workspace-scala/SparkAls/data/test.data"
    //private val In_path  = "hdfs://hadoop-013:9000/user/cray/SparkAls/test.data"
-   private val In_path  = "hdfs://hadoop-013:9000/user/cray/SparkAls/ratings.dat"
+   private val In_path  = "hdfs://ip-10-166-138-217:7077/users/cray/SparkAls/ratings.dat"
    //private val In_path  = "/Users/cray/Documents/workspace-scala/SparkAls/data/ratings.dat"
  
    
@@ -71,33 +71,44 @@ object SparkAls {
 
 
     // Load and parse the data
+    println("\nLoad into RDD...\n");
     val data = sc.textFile(In_path)
     //test.data
     //val ratings = data.map(_.concat(",n").split(',') match { 
 
     //ratings.data of MovieLens
+    println("Mapping...\n");
     val ratings = data.map(_.split("::") match { 
-      case Array(user, item, rate, _) =>
-        Rating(user.toInt, item.toInt, rate.toDouble)
-      case some => println(some); throw new Exception("-->Match error...")
-      })
+        case Array(user, item, rate, _) => {
+                printf("--->user: %s, item: %s, rate: %s\n", user, item, rate )
+                Rating(user.toInt, item.toInt, rate.toDouble)
+            }
+        case some => println(some); throw new Exception("-->Match error...")
+    })
+
+    System.out.flush()
+
 
     // Build the recommendation model using ALS
     val rank = 10  //number of lantent factors
     val numIterations = 20
     val lambda = 0.01 //normalization parameter
+    println("Training...\n");
     val model = ALS.train(ratings, rank, numIterations, lambda)
 
+/*
     // Evaluate the model on rating data
     val usersProducts = ratings.map { case Rating(user, product, rate) =>
       (user, product)
     }
     
+    println("Predicting...\n");
     val predictions = 
       model.predict(usersProducts).map { case Rating(user, product, rate) => 
         ((user, product), rate)
       }
     
+    println("Joining...\n");
     val ratesAndPreds = ratings.map { case Rating(user, product, rate) => 
       ((user, product), rate)
     }.join(predictions).sortByKey()  //ascending or descending 
@@ -119,7 +130,7 @@ object SparkAls {
       err * err
     }.mean()
     println("\n\n--->Mean Squared Error = " + MSE + "\n\n\n")
-
+*/
 
   }
   
