@@ -27,10 +27,10 @@ object SparkAls {
    private val RUN_JAR="/home/cray/SparkAls/target/scala-2.10/sparkals_2.10-0.1-SNAPSHOT.jar"
    //private val Out_path = "/Users/cray/Documents/workspace-scala/SparkAls/data/output.data"
    private val Out_path = "/user/cray/SparkAls/output"
-   private val Out_Hadoop_Path = "hdfs://ip-10-166-138-217:7077/users/cray/SparkAls/output"
+   private val Out_Hadoop_Path = "hdfs://localhost:9000/user/cray/SparkAls/output"
    // private val In_path  = "/Users/cray/Documents/workspace-scala/SparkAls/data/test.data"
    //private val In_path  = "hdfs://hadoop-013:9000/user/cray/SparkAls/test.data"
-   private val In_path  = "hdfs://ip-10-166-138-217:7077/users/cray/SparkAls/ratings.dat"
+   private val In_path  = "hdfs://localhost:9000/user/cray/SparkAls/ratings.dat"
    //private val In_path  = "/Users/cray/Documents/workspace-scala/SparkAls/data/ratings.dat"
  
    

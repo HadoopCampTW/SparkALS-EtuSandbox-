@@ -9,7 +9,7 @@ scalaVersion := "2.10.4"
 mainClass in (Compile,run) := Some("SparkAls")
 
 
-libraryDependencies += "org.apache.spark" %% "spark-core" % "1.0.2"
+libraryDependencies += "org.apache.spark" %% "spark-core" % "1.2.1"
 
 resolvers += "Akka Repository" at "http://repo.akka.io/releases/"
 
@@ -24,9 +24,9 @@ libraryDependencies ++= Seq(
 resolvers += "Akka Repository" at "http://repo.akka.io/releases/"
 
 
-libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.5.0-mr1-cdh5.3.2"
+libraryDependencies += "org.apache.hadoop" % "hadoop-client" % "2.4.1"
 
-libraryDependencies += "org.apache.spark" %% "spark-mllib" % "1.0.2"
+libraryDependencies += "org.apache.spark" %% "spark-mllib" % "1.2.1"
 
 // If using CDH, also add Cloudera repo
 resolvers += "Cloudera Repository" at "https://repository.cloudera.com/artifactory/cloudera-repos/"
