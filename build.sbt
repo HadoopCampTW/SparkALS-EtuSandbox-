@@ -32,4 +32,5 @@ libraryDependencies += "org.apache.spark" %% "spark-mllib" % "1.2.1"
 resolvers += "Cloudera Repository" at "https://repository.cloudera.com/artifactory/cloudera-repos/"
 
 
+javaOptions in run += s"-Djava.library.path=/usr/lib"
 
