@@ -96,7 +96,6 @@ object SparkAls {
     println("Training...\n");
     val model = ALS.train(ratings, rank, numIterations, lambda)
 
-/*
     // Evaluate the model on rating data
     val usersProducts = ratings.map { case Rating(user, product, rate) =>
       (user, product)
@@ -130,7 +129,6 @@ object SparkAls {
       err * err
     }.mean()
     println("\n\n--->Mean Squared Error = " + MSE + "\n\n\n")
-*/
 
   }
   
