@@ -23,10 +23,10 @@ import java.io.File
 
 object SparkAls {
   
-   private val RUN_JAR="/home/cloudera/SparkAls/target/scala-2.10/sparkals_2.10-0.1-SNAPSHOT.jar"
-   private val Out_path = "/user/cloudera/SparkAls/output"
-   private val Out_Hadoop_Path = "hdfs://quickstart.cloudera:8020/user/cloudera/SparkAls/output"
-   private val In_path  = "hdfs://quickstart.cloudera:8020/user/cloudera/SparkAls/ratings.dat"
+   private val RUN_JAR="/home/eva/SparkAls/target/scala-2.10/sparkals_2.10-0.1-SNAPSHOT.jar"
+   private val Out_path = "/user/eva/SparkAls/output"
+   private val Out_Hadoop_Path = "hdfs://localhost:8020/user/eva/SparkAls/output"
+   private val In_path  = "hdfs://localhost:8020/user/eva/SparkAls/ratings.dat"
    
    
   def setSparkEnv(master:String) : SparkContext = {
