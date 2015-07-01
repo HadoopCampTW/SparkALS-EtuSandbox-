@@ -68,9 +68,7 @@ object SparkAls {
     // Load and parse the data
     println("\nLoad into RDD...\n");
     val data = sc.textFile(In_path)
-    //test.data
-    //val ratings = data.map(_.concat(",n").split(',') match { 
-
+    
     //ratings.data of MovieLens
     println("Mapping...\n");
     val ratings = data.map(_.split("::") match { 
@@ -112,7 +110,6 @@ object SparkAls {
     println("\n\nTry to delete path: ["+Out_path+"]\n\n\n");
     val delete_out_path = "hadoop fs -rm -r " + Out_path
     delete_out_path.!
-    //FileUtil.fullyDelete(new File(Out_path));
     
     val formatedRatesAndPreds = ratesAndPreds.map {
       case ((user, product), (rate, pred)) => user + "\t" + product + "\t" + rate + "\t" + pred
